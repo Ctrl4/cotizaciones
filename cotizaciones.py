@@ -12,8 +12,8 @@ def getCotizaciones():
 	for moneda in tbody.findAll('tr'):
 		array.append({ 
 			"moneda" : moneda.find('p',{"class":"moneda"}).string,
-			"compra" : moneda.findAll('p',{"class":"valor"})[0].string,
-			"venta"  : moneda.findAll('p',{"class":"valor"})[1].string
+			"compra" : moneda.findAll('p',{"class":"valor"})[0].string.replace('.','').replace(',','.').replace('-','').strip(),
+			"venta"  : moneda.findAll('p',{"class":"valor"})[1].string.replace('.','').replace(',','.').replace('-','').strip()
 		})
 
 	return array
