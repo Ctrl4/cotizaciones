@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup as bs
 import requests
+import sqlalchemy
 
 # Retorna un array con las cotizaciones del dia
 def getCotizaciones():
@@ -18,7 +19,21 @@ def getCotizaciones():
 
 	return array
 
+def insertCotizaciones(data):
+	dbUrl = 'postgresql://postgres:p4ssw0rd@localhost:5432/cotizaciones'
+	engine = sqlalchemy.create_engine(dbUrl)
+	con = engine.connect()
+
+	for elemento in data:
+		if elemento['compra'] == '':
+			statement = sqlalchemy.sql.text(""" insert into monedas(moneda, compra, venta) values(:moneda, NULL, :venta)""")	
+		elif elemento['venta'] == '':
+			statement = sqlalchemy.sql.text(""" insert into monedas(moneda, compra, venta) values(:moneda, :compra, NULL )""")
+		else:
+			statement = sqlalchemy.sql.text(""" insert into monedas(moneda, compra, venta) values(:moneda, :compra, :venta)""")	
+		con.execute(statement, **elemento)
 
 
 
-print (getCotizaciones())
+array = getCotizaciones()
+insertCotizaciones(array)
