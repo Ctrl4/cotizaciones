@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup as bs
 import requests
 import sqlalchemy
-
+#🗁
 # Retorna un array con las cotizaciones del dia
 def getCotizaciones():
 	url = "https://www.brou.com.uy/c/portal/render_portlet?p_l_id=20593&p_p_id=cotizacionfull_WAR_broutmfportlet_INSTANCE_otHfewh1klyS"
